@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>QuickBull — Invoice & Quotation Maker</title>
+
+  <!-- ====== AD SCRIPTS (placed right before </head>) ====== -->
+  <!-- Script 1: popunder / network -->
+  <script async="async" data-cfasync="false" src="https://pl31197671.profitableratecpmnetwork.com/f1986d115ef2309c3ccc4d0a0e4978aa/invoke.js"></script>
+
+  <!-- Script 2: invoke (highrevenueformat) -->
+  <script>
+    atOptions = {
+      'key' : 'a0ff35694b34eb4b9b3b5f50ca1a2e4a',
+      'format' : 'iframe',
+      'height' : 60,
+      'width' : 468,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highrevenueformat.com/a0ff35694b34eb4b9b3b5f50ca1a2e4a/invoke.js"></script>
+
+  <!-- Script 3: popunder (recommended one per page) -->
+  <script src="https://pl31197673.profitableratecpmnetwork.com/7d/1c/92/7d1c925f3e60727db4a7d04ed8e8e390.js"></script>
+  <!-- ====== END AD SCRIPTS ====== -->
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --primary:#111827;
+      --blue:#2563eb;
+      --green:#059669;
+      --red:#dc2626;
+      --radius:18px;
+      --shadow:0 12px 35px rgba(15,23,42,.08);
+      --shadow-hover:0 20px 50px rgba(15,23,42,.13);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%,rgba(37,99,235,.07),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(5,150,105,.06),transparent 28%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      animation:pageEnter .55s ease both;
+    }
+
+    button,
+    input,
+    textarea{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(229,231,235,.8);
+      animation:slideDown .55s ease both;
+    }
+
+    .topbar-inner{
+      max-width:1450px;
+      margin:auto;
+      padding:14px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#111827,#334155);
+      color:white;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:17px;
+      letter-spacing:-1px;
+      box-shadow:0 10px 25px rgba(17,24,39,.22);
+      position:relative;
+      overflow:hidden;
+      animation:logoFloat 3.8s ease-in-out infinite;
+    }
+
+    .brand-icon::after{
+      content:"";
+      position:absolute;
+      width:70px;
+      height:15px;
+      background:rgba(255,255,255,.2);
+      transform:rotate(-45deg) translateX(-80px);
+      animation:logoShine 3.2s ease-in-out infinite;
+    }
+
+    .brand-name{
+      font-size:20px;
+      font-weight:850;
+      letter-spacing:-.5px;
+    }
+
+    .brand-sub{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:1px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .container{
+      width:min(1450px,calc(100% - 32px));
+      margin:28px auto 60px;
+    }
+
+    .dashboard{
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+      gap:24px;
+      align-items:start;
+    }
+
+    .panel{
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        box-shadow .35s ease,
+        border-color .35s ease;
+      animation:cardEnter .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .editor{
+      animation-delay:.08s;
+    }
+
+    .preview-wrap{
+      animation-delay:.16s;
+      position:sticky;
+      top:84px;
+    }
+
+    .panel:hover{
+      box-shadow:var(--shadow-hover);
+      border-color:#dbe2ea;
+    }
+
+    .section{
+      padding:21px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .section:last-child{
+      border-bottom:0;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:15px;
+    }
+
+    .section-title h3{
+      margin:0;
+      font-size:15px;
+      letter-spacing:-.2px;
+    }
+
+    .section-title span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .grid.three{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    .field label{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      border-radius:12px;
+      padding:11px 12px;
+      outline:none;
+      transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .2s ease,
+        background .25s ease;
+    }
+
+    .field textarea{
+      min-height:80px;
+      resize:vertical;
+    }
+
+    .field input:hover,
+    .field textarea:hover{
+      border-color:#cbd5e1;
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.09);
+      transform:translateY(-1px);
+    }
+
+    .type-tabs{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+
+    .type-tab{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:11px;
+      font-weight:800;
+      color:var(--muted);
+      transition:
+        transform .25s cubic-bezier(.2,.8,.2,1),
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .type-tab:hover{
+      transform:translateY(-2px);
+      border-color:#cbd5e1;
+    }
+
+    .type-tab.active{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+      box-shadow:0 8px 20px rgba(17,24,39,.18);
+      animation:tabPop .3s ease both;
+    }
+
+    .logo-box{
+      border:1px dashed #cbd5e1;
+      border-radius:14px;
+      padding:15px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background:#f8fafc;
+      transition:.3s ease;
+    }
+
+    .logo-box:hover{
+      background:#fff;
+      border-color:#94a3b8;
+      transform:translateY(-2px);
+    }
+
+    .logo-preview{
+      width:50px;
+      height:50px;
+      border-radius:13px;
+      background:#111827;
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      overflow:hidden;
+    }
+
+    .logo-preview img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .btn{
+      border:0;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:800;
+      transition:
+        transform .2s cubic-bezier(.2,.8,.2,1),
+        box-shadow .25s ease,
+        background .25s ease,
+        opacity .25s ease;
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .btn::after{
+      content:"";
+      position:absolute;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:rgba(255,255,255,.28);
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%) scale(0);
+      transition:transform .45s ease,opacity .45s ease;
+      z-index:-1;
+    }
+
+    .btn:active{
+      transform:scale(.95);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn:hover::after{
+      transform:translate(-50%,-50%) scale(9);
+      opacity:0;
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 7px 18px rgba(17,24,39,.16);
+    }
+
+    .btn-primary:hover{
+      box-shadow:0 12px 28px rgba(17,24,39,.25);
+    }
+
+    .btn-secondary{
+      background:#eef2f7;
+      color:#334155;
+    }
+
+    .btn-green{
+      background:var(--green);
+      color:#fff;
+      box-shadow:0 7px 18px rgba(5,150,105,.16);
+    }
+
+    .btn-danger{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .btn-small{
+      padding:8px 11px;
+      font-size:12px;
+    }
+
+    .items{
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+    }
+
+    .item-row{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      background:#fff;
+      animation:itemIn .4s cubic-bezier(.2,.8,.2,1) both;
+      transition:
+        box-shadow .3s ease,
+        border-color .3s ease,
+        transform .3s ease;
+    }
+
+    .item-row:hover{
+      border-color:#cbd5e1;
+      box-shadow:0 8px 24px rgba(15,23,42,.07);
+      transform:translateY(-2px);
+    }
+
+    .item-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.5fr) 90px 120px 120px 42px;
+      gap:8px;
+      align-items:center;
+    }
+
+    .item-grid input{
+      width:100%;
+      min-width:0;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:9px 10px;
+      outline:none;
+      transition:.25s ease;
+    }
+
+    .item-grid input:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+
+    .amount-box{
+      padding:9px 10px;
+      border-radius:10px;
+      background:#f8fafc;
+      font-weight:800;
+      text-align:right;
+      overflow:hidden;
+    }
+
+    .item-remove{
+      width:36px;
+      height:36px;
+      border:0;
+      border-radius:10px;
+      background:#fee2e2;
+      color:#b91c1c;
+      font-weight:900;
+      transition:.25s ease;
+    }
+
+    .item-remove:hover{
+      transform:rotate(5deg) scale(1.06);
+      background:#fecaca;
+    }
+
+    .add-item{
+      margin-top:10px;
+    }
+
+    .totals{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .total-line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:#475569;
+      font-size:14px;
+    }
+
+    .total-line strong{
+      color:#111827;
+    }
+
+    .grand-total{
+      margin-top:5px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .grand-total span{
+      font-size:14px;
+      color:#475569;
+      font-weight:800;
+    }
+
+    .grand-total strong{
+      font-size:25px;
+      letter-spacing:-.7px;
+      transition:transform .3s ease;
+    }
+
+    .number-pop{
+      animation:numberPop .35s ease both;
+    }
+
+    .actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+    }
+
+    .preview-header{
+      padding:15px 18px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      background:#fbfdff;
+    }
+
+    .preview-header strong{
+      font-size:14px;
+    }
+
+    .preview-header span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .paper-area{
+      padding:22px;
+      background:
+        linear-gradient(135deg,rgba(37,99,235,.025),transparent 40%),
+        #eef2f7;
+      min-height:700px;
+    }
+
+    .paper{
+      width:100%;
+      max-width:794px;
+      min-height:1123px;
+      margin:auto;
+      background:#fff;
+      box-shadow:0 15px 45px rgba(15,23,42,.13);
+      padding:48px;
+      animation:paperEnter .8s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .paper-top{
+      display:flex;
+      justify-content:space-between;
+      gap:30px;
+      padding-bottom:25px;
+      border-bottom:2px solid #111827;
+    }
+
+    .business{
+      display:flex;
+      gap:13px;
+      align-items:flex-start;
+    }
+
+    .paper-logo{
+      width:55px;
+      height:55px;
+      border-radius:14px;
+      background:#111827;
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      overflow:hidden;
+      flex:none;
+    }
+
+    .paper-logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .business-name{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.6px;
+    }
+
+    .business-meta{
+      margin-top:5px;
+      color:#64748b;
+      font-size:11px;
+      line-height:1.65;
+      white-space:pre-line;
+    }
+
+    .document-title{
+      text-align:right;
+    }
+
+    .document-title h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:-1px;
+    }
+
+    .document-number{
+      color:#64748b;
+      font-size:11px;
+      margin-top:7px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin:28px 0;
+    }
+
+    .info-box{
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:13px;
+    }
+
+    .info-box .label{
+      font-size:9px;
+      color:#94a3b8;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      margin-bottom:5px;
+    }
+
+    .info-box .value{
+      font-size:12px;
+      white-space:pre-line;
+      line-height:1.55;
+    }
+
+    .invoice-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:11px;
+    }
+
+    .invoice-table th{
+      text-align:left;
+      background:#f8fafc;
+      color:#475569;
+      padding:10px;
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    .invoice-table td{
+      padding:11px 10px;
+      border-bottom:1px solid #eef2f7;
+      vertical-align:top;
+    }
+
+    .invoice-table th:nth-child(n+2),
+    .invoice-table td:nth-child(n+2){
+      text-align:right;
+    }
+
+    .summary{
+      margin-top:22px;
+      margin-left:auto;
+      width:min(330px,100%);
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      padding:6px 0;
+      font-size:11px;
+    }
+
+    .summary-row.total{
+      border-top:1.5px solid #111827;
+      margin-top:5px;
+      padding-top:12px;
+      font-size:15px;
+      font-weight:900;
+    }
+
+    .notes{
+      margin-top:35px;
+      border-top:1px solid #e5e7eb;
+      padding-top:15px;
+    }
+
+    .notes-title{
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      color:#64748b;
+      letter-spacing:.7px;
+      margin-bottom:6px;
+    }
+
+    .notes-text{
+      font-size:11px;
+      color:#475569;
+      white-space:pre-line;
+      line-height:1.6;
+    }
+
+    .footer-note{
+      margin-top:60px;
+      text-align:center;
+      font-size:9px;
+      color:#94a3b8;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:25px;
+      transform:translateX(-50%) translateY(25px);
+      background:#111827;
+      color:#fff;
+      padding:11px 17px;
+      border-radius:999px;
+      box-shadow:0 15px 35px rgba(15,23,42,.25);
+      font-size:13px;
+      font-weight:700;
+      opacity:0;
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    .toast.show{
+      animation:toastIn .35s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    /* Animations */
+    @keyframes pageEnter{
+      from{opacity:0}
+      to{opacity:1}
+    }
+
+    @keyframes slideDown{
+      from{
+        opacity:0;
+        transform:translateY(-20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes cardEnter{
+      from{
+        opacity:0;
+        transform:translateY(25px) scale(.985);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    @keyframes paperEnter{
+      from{
+        opacity:0;
+        transform:translateY(20px) scale(.985);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    @keyframes logoFloat{
+      0%,100%{
+        transform:translateY(0) rotate(0deg);
+      }
+      50%{
+        transform:translateY(-4px) rotate(-2deg);
+      }
+    }
+
+    @keyframes logoShine{
+      0%,45%{
+        transform:rotate(-45deg) translateX(-100px);
+      }
+      70%,100%{
+        transform:rotate(-45deg) translateX(100px);
+      }
+    }
+
+    @keyframes tabPop{
+      0%{transform:scale(.94)}
+      100%{transform:scale(1)}
+    }
+
+    @keyframes itemIn{
+      from{
+        opacity:0;
+        transform:translateY(12px) scale(.98);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    @keyframes numberPop{
+      0%{
+        transform:scale(.96);
+        opacity:.65;
+      }
+      55%{
+        transform:scale(1.04);
+        opacity:1;
+      }
+      100%{
+        transform:scale(1);
+      }
+    }
+
+    @keyframes toastIn{
+      0%{
+        opacity:0;
+        transform:translateX(-50%) translateY(25px) scale(.94);
+      }
+      100%{
+        opacity:1;
+        transform:translateX(-50%) translateY(0) scale(1);
+      }
+    }
+
+    /* Responsive */
+    @media(max-width:1050px){
+      .dashboard{
+        grid-template-columns:1fr;
+      }
+      .preview-wrap{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media(max-width:760px){
+      .container{
+        width:min(100% - 20px,1450px);
+        margin-top:15px;
+      }
+      .topbar-inner{
+        padding:11px 12px;
+      }
+      .brand-sub{
+        display:none;
+      }
+      .brand-name{
+        font-size:18px;
+      }
+      .brand-icon{
+        width:42px;
+        height:42px;
+      }
+      .top-actions .btn{
+        padding:9px 10px;
+        font-size:12px;
+      }
+      .grid,
+      .grid.three{
+        grid-template-columns:1fr;
+      }
+      .item-grid{
+        grid-template-columns:1fr 80px;
+      }
+      .item-grid .rate-box,
+      .item-grid .amount-box{
+        grid-column:auto;
+      }
+      .item-grid .item-remove{
+        grid-column:2;
+        justify-self:end;
+      }
+      .paper-area{
+        padding:8px;
+        overflow:auto;
+      }
+      .paper{
+        min-width:680px;
+        padding:32px;
+        transform-origin:top left;
+      }
+      .preview-wrap{
+        overflow:hidden;
+      }
+      .section{
+        padding:16px;
+      }
+      .actions .btn{
+        flex:1;
+      }
+    }
+
+    @media(max-width:500px){
+      .top-actions{
+        gap:5px;
+      }
+      .top-actions .btn:nth-child(1){
+        display:none;
+      }
+      .type-tabs{
+        gap:5px;
+      }
+      .type-tab{
+        padding:9px 5px;
+        font-size:12px;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,
+      *::before,
+      *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+      }
+    }
+
+    @media print{
+      @page{
+        size:A4;
+        margin:0;
+      }
+      html,
+      body{
+        background:#fff !important;
+        animation:none !important;
+      }
+      body{
+        min-height:auto;
+      }
+      .topbar,
+      .editor,
+      .preview-header,
+      .toast{
+        display:none !important;
+      }
+      .container{
+        width:100%;
+        margin:0;
+      }
+      .dashboard{
+        display:block;
+      }
+      .panel,
+      .preview-wrap{
+        border:0;
+        box-shadow:none;
+        border-radius:0;
+        animation:none !important;
+      }
+      .paper-area{
+        padding:0;
+        background:#fff;
+        min-height:auto;
+      }
+      .paper{
+        width:210mm;
+        min-height:297mm;
+        max-width:none;
+        margin:0;
+        padding:16mm;
+        box-shadow:none;
+        animation:none !important;
+        transform:none !important;
+      }
+      *{
+        animation:none !important;
+        transition:none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <div class="brand">
+      <div class="brand-icon">QB</div>
+      <div>
+        <div class="brand-name">QuickBull</div>
+        <div class="brand-sub">Invoice & Quotation Maker</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn btn-secondary" onclick="newDocument()">New</button>
+      <button class="btn btn-primary" onclick="saveBusiness()">Save Business</button>
+      <button class="btn btn-green" onclick="printDocument()">Print / PDF</button>
+    </div>
+
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Ad container (first) -->
+  <div id="container-f1986d115ef2309c3ccc4d0a0e4978aa" style="margin-bottom:20px;"></div>
+
+  <div class="dashboard">
+
+    <!-- EDITOR -->
+    <section class="panel editor">
+
+      <div class="section">
+        <div class="section-title">
+          <h3>Document Type</h3>
+          <span>Choose your document</span>
+        </div>
+
+        <div class="type-tabs">
+          <button class="type-tab active" onclick="setDocumentType('Invoice',this)">Invoice</button>
+          <button class="type-tab" onclick="setDocumentType('Quotation',this)">Quotation</button>
+          <button class="type-tab" onclick="setDocumentType('Receipt',this)">Receipt</button>
+        </div>
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Your Business</h3>
+          <span>Saved locally</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Business Name</label>
+            <input id="businessName" value="QuickBull" oninput="updatePreview()">
+          </div>
+
+          <div class="field">
+            <label>Phone</label>
+            <input id="businessPhone" placeholder="+91 98765 43210" oninput="updatePreview()">
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="businessEmail" placeholder="hello@example.com" oninput="updatePreview()">
+          </div>
+
+          <div class="field">
+            <label>Address</label>
+            <input id="businessAddress" placeholder="Business address" oninput="updatePreview()">
+          </div>
+
+          <div class="field full">
+
+            <label>Business Logo</label>
+
+            <div class="logo-box">
+
+              <div class="logo-preview" id="logoPreview">QB</div>
+
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input
+                  id="logoInput"
+                  type="file"
+                  accept="image/*"
+                  onchange="handleLogo(event)"
+                  style="max-width:180px"
+                >
+
+                <button
+                  class="btn btn-small btn-danger"
+                  onclick="removeLogo()"
+                  type="button"
+                >
+                  Remove
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Customer</h3>
+          <span>Bill to</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Customer Name</label>
+            <input id="customerName" placeholder="Customer name" oninput="updatePreview()">
+          </div>
+
+          <div class="field">
+            <label>Customer Phone</label>
+            <input id="customerPhone" placeholder="+91..." oninput="updatePreview()">
+          </div>
+
+          <div class="field full">
+            <label>Customer Address</label>
+            <input id="customerAddress" placeholder="Customer address" oninput="updatePreview()">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Document Details</h3>
+          <span>Number & date</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Document Number</label>
+            <input id="documentNumber" oninput="updatePreview()">
+          </div>
+
+          <div class="field">
+            <label>Date</label>
+            <input id="documentDate" type="date" onchange="updatePreview()">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Items / Services</h3>
+          <span>Add products or services</span>
+        </div>
+
+        <div class="items" id="items"></div>
+
+        <button
+          class="btn btn-secondary add-item"
+          onclick="addItem()"
+          type="button"
+        >
+          + Add Item
+        </button>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Taxes & Discount</h3>
+          <span>Automatic calculation</span>
+        </div>
+
+        <div class="grid three">
+
+          <div class="field">
+            <label>Discount %</label>
+            <input
+              id="discount"
+              type="number"
+              min="0"
+              step="0.01"
+              value="0"
+              oninput="calculate()"
+            >
+          </div>
+
+          <div class="field">
+            <label>GST %</label>
+            <input
+              id="gst"
+              type="number"
+              min="0"
+              step="0.01"
+              value="0"
+              oninput="calculate()"
+            >
+          </div>
+
+          <div class="field">
+            <label>Currency</label>
+            <input value="Indian Rupee (₹)" disabled>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          <h3>Notes</h3>
+          <span>Optional</span>
+        </div>
+
+        <div class="field">
+          <textarea
+            id="notes"
+            placeholder="Thank you for your business..."
+            oninput="updatePreview()"
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="totals">
+
+          <div class="total-line">
+            <span>Subtotal</span>
+            <strong id="subtotal">₹0.00</strong>
+          </div>
+
+          <div class="total-line">
+            <span>Discount</span>
+            <strong id="discountAmount">₹0.00</strong>
+          </div>
+
+          <div class="total-line">
+            <span>GST</span>
+            <strong id="gstAmount">₹0.00</strong>
+          </div>
+
+          <div class="grand-total">
+            <span>Total</span>
+            <strong id="grandTotal">₹0.00</strong>
+          </div>
+
+        </div>
+
+        <div class="actions" style="margin-top:16px;">
+
+          <button
+            class="btn btn-green"
+            onclick="sendWhatsApp()"
+            type="button"
+          >
+            WhatsApp
+          </button>
+
+          <button
+            class="btn btn-primary"
+            onclick="printDocument()"
+            type="button"
+          >
+            Print / Save PDF
+          </button>
+
+          <button
+            class="btn btn-danger"
+            onclick="clearAll()"
+            type="button"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Additional ad slot (inline) inside editor panel -->
+      <div style="padding:15px; background:#fafbfc; border-top:1px solid #e5e7eb; text-align:center;">
+        <!-- This container is intentionally left empty; the invoke.js script above renders an iframe -->
+        <div id="highrevenue-ad"></div>
+      </div>
+
+    </section>
+
+
+    <!-- PREVIEW -->
+    <section class="panel preview-wrap">
+
+      <div class="preview-header">
+        <strong>Live Preview</strong>
+        <span>A4 document</span>
+      </div>
+
+      <div class="paper-area">
+
+        <div class="paper" id="paper">
+
+          <div class="paper-top">
+
+            <div class="business">
+
+              <div class="paper-logo" id="paperLogo">QB</div>
+
+              <div>
+
+                <div class="business-name" id="previewBusinessName">
+                  QuickBull
+                </div>
+
+                <div class="business-meta" id="previewBusinessMeta">
+                  Your business details
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="document-title">
+
+              <h1 id="previewDocumentType">
+                INVOICE
+              </h1>
+
+              <div class="document-number" id="previewDocumentNumber">
+                #QB-1001
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-grid">
+
+            <div class="info-box">
+              <div class="label">Bill To</div>
+              <div class="value" id="previewCustomer">
+                Customer details
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="label">Date</div>
+              <div class="value" id="previewDate"></div>
+            </div>
+
+          </div>
+
+
+          <table class="invoice-table">
+
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+
+            <tbody id="previewItems"></tbody>
+
+          </table>
+
+
+          <div class="summary">
+
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <strong id="previewSubtotal">₹0.00</strong>
+            </
